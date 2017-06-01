@@ -7,6 +7,9 @@ using System.Configuration;
 
 namespace IEIT.Reports.WebFramework.Core.Resolvers
 {
+    /// <summary>
+    /// Класс помогающии работать с файлами-шаблонами
+    /// </summary>
     public class TemplateResolver
     {
         
@@ -20,6 +23,9 @@ namespace IEIT.Reports.WebFramework.Core.Resolvers
             TemplatesDirectory = ConfigurationManager.AppSettings[CONFIG_KEY_TEMPLATES_PATH];
         }
 
+        /// <summary>
+        /// Директория данной сборки
+        /// </summary>
         private static string AssemblyDirectory
         {
             get
@@ -31,6 +37,11 @@ namespace IEIT.Reports.WebFramework.Core.Resolvers
             }
         }
 
+        /// <summary>
+        /// Получить тип файла по его пути
+        /// </summary>
+        /// <param name="fileId">путь к файлу</param>
+        /// <returns>Тип файла</returns>
         private static FileType GetFileType(string fileId)
         {
             var ext = fileId.Split('.').Last();
@@ -40,6 +51,9 @@ namespace IEIT.Reports.WebFramework.Core.Resolvers
             return FileType.UNKNOWN;
         } 
 
+        /// <summary>
+        /// Перечисление типов файлов
+        /// </summary>
         private enum FileType
         {
             EXCEL,
@@ -47,6 +61,11 @@ namespace IEIT.Reports.WebFramework.Core.Resolvers
             UNKNOWN
         }
 
+        /// <summary>
+        /// Получить путь к файлу шаблона
+        /// </summary>
+        /// <param name="fileId">Путь к файлу шаблона относлительно директории с шаблонами <see cref="GetTemplatesDir"/></param>
+        /// <returns></returns>
         public static string ResolveFilePath(string fileId)
         {
             var baseDir = GetTemplatesDir();
@@ -65,19 +84,23 @@ namespace IEIT.Reports.WebFramework.Core.Resolvers
             var targetFileName = pathParts.Last();
             pathParts = pathParts.Take(pathParts.Count() - 1).ToArray();
             var innerPath = string.Join("\\", pathParts);
-            var fileNames = Directory.GetFiles($"{baseDir}\\{innerPath}").Select(path => Path.GetFileName(path));
+            var filePath = baseDir + (!string.IsNullOrWhiteSpace(innerPath) ? "\\" + innerPath : string.Empty);
 
+            var fileNames = Directory.GetFiles(filePath).Select(path => Path.GetFileName(path));
             Regex regEx = new Regex($"{targetFileName}\\.({SUPPORTED_FILE_EXTENTIONS})");
+
             foreach (var fileName in fileNames)
-            {
-                if (regEx.IsMatch(fileName)) { return $"{baseDir}\\{innerPath}\\{fileName}"; }
-            }
+            { if (regEx.IsMatch(fileName)) { return $"{filePath}\\{fileName}"; } }
 
             return string.Empty;
 
         }
 
-        private static string GetTemplatesDir() { return Path.GetFullPath($"{AssemblyDirectory}\\{TemplatesDirectory}"); }
+        /// <summary>
+        /// Получить полный путь к директории с шаблонами
+        /// </summary>
+        /// <returns>Полный путь к директории с шаблонами</returns>
+        public static string GetTemplatesDir() { return Path.GetFullPath($"{AssemblyDirectory}\\{TemplatesDirectory}"); }
 
 
     }

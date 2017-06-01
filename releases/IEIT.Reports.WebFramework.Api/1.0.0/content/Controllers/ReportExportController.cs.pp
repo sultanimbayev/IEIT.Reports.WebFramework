@@ -32,7 +32,10 @@ namespace $rootnamespace$.Controllers
             var handler = RepositoryResolver.GetHandlerFor(formName, queryParams);
 
             if (handler == null)
+            {
+                result.StatusCode = HttpStatusCode.NotFound;
                 return result;
+            }
 
             var tempDir = System.Web.Hosting.HostingEnvironment.MapPath("\\App_Data\\Temp");
             var guid = Guid.NewGuid();
