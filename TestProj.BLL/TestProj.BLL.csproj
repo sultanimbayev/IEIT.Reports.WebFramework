@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5F100175-53F7-40E2-A65A-AFC9C0109BBD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TestProj.BLL</RootNamespace>
+    <AssemblyName>TestProj.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=0.0.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.1\lib\net45\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IEIT.Reports.Export.Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IEIT.Reports.Export.Helpers.0.1.1\lib\IEIT.Reports.Export.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Forms\Export\Handlers\ExcelFilesHandler.cs" />
+    <Compile Include="Forms\Export\Handlers\WordFileHandler.cs" />
+    <Compile Include="Forms\Export\Helpers\WordProcessingHelper.cs" />
+    <Compile Include="Forms\Export\Models\DocBlock.cs" />
+    <Compile Include="Forms\Export\Models\DocData.cs" />
+    <Compile Include="Forms\Export\Models\ExcelCell.cs" />
+    <Compile Include="Forms\Export\Models\Interfaces\IDocBlock.cs" />
+    <Compile Include="Forms\Export\Models\Interfaces\IDocData.cs" />
+    <Compile Include="Forms\Export\Models\Interfaces\IExcelCell.cs" />
+    <Compile Include="Forms\Export\Repositories\ExcelRepo.cs" />
+    <Compile Include="Forms\Export\Repositories\HumanDetailsRepo.cs" />
+    <Compile Include="Forms\Export\Repositories\Interfaces\IReplacerRepository.cs" />
+    <Compile Include="Forms\Export\Repositories\Interfaces\ISimpleExcelRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IEIT.Reports.WebFramework.Core\IEIT.Reports.WebFramework.Core.csproj">
+      <Project>{370bae7f-8de5-49ec-8bb3-bfd2ae6ef741}</Project>
+      <Name>IEIT.Reports.WebFramework.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="OpenXML.Elements\Drawing\Charts\Formula.Empty.xml" />
+    <Content Include="OpenXML.Elements\Drawing\Charts\Values.Empty.xml" />
+    <Content Include="OpenXML.Elements\Drawing\ChartTitle.xml" />
+    <Content Include="OpenXML.Elements\Drawing\ParagraphProperties.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

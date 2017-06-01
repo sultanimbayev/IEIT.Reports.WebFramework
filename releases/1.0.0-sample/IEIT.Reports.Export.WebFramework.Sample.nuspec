@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>IEIT.Reports.Export.WebFramework.Sample</id>
+    <version>1.0.0</version>
+    <authors>sultan.imbayev</authors>
+    <owners>IEIT KBTU</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+	<projectUrl>https://github.com/sultanimbayev/IEIT.Reports.Export.WebFramework</projectUrl>
+    <description>
+		Для выгрузки отчета в Web проекте через Api. 
+		Предоставдляет фреймворк для скачивания и формирование файлов
+		отчетов в формате
+		Excel или Word.
+	</description>
+    <releaseNotes>Library created</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>OpenXml Word Excel WebApi</tags>
+    <dependencies>
+	  <dependency id="IEIT.Reports.Export.WebFramework" version="1.0.0"/>
+    </dependencies>
+	<frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Web" />
+	  <frameworkAssembly assemblyName="System.IO.Compression.FileSystem"/>
+    </frameworkAssemblies>
+  </metadata>
+</package>

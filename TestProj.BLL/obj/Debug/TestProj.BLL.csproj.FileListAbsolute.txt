@@ -1,0 +1,11 @@
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\obj\Debug\TestProj.BLL.csprojResolveAssemblyReference.cache
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\bin\Debug\TestProj.BLL.dll.config
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\bin\Debug\TestProj.BLL.dll
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\bin\Debug\TestProj.BLL.pdb
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\bin\Debug\IEIT.Reports.Export.Helpers.dll
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\bin\Debug\IEIT.Reports.WebFramework.Core.dll
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\bin\Debug\IEIT.Reports.WebFramework.Core.pdb
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\obj\Debug\TestProj.BLL.dll
+C:\Users\Пользователь\Documents\Visual Studio 2015\Projects\IEIT.Reports.Export.WebFramework\TestProj.BLL\obj\Debug\TestProj.BLL.pdb
