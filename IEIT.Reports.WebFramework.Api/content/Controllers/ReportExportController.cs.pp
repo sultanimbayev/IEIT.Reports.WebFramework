@@ -15,24 +15,16 @@ namespace $rootnamespace$.Controllers
 {
     public class ReportExportController : ApiController
     {
-        private const string DEFAULT_ZIP_NAME = "Выходные данные.zip";
-
-        /// <summary>
-        /// Для скачивания форм
-        /// </summary>
-        /// <param name="formName">Название формы</param>
-        /// <returns>HTTP ответ с файлом указанной формы или архивом содержащий запрошенные отчеты</returns>
-        [HttpGet]
-        [Route("api/Files/DownloadForm/{formName}")]
-        public HttpResponseMessage DownloadForm(string formName)
-        {
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             var queryParams = HttpContext.Current.Request.QueryString;
             
             var handler = RepositoryResolver.GetHandlerFor(formName, queryParams);
 
             if (handler == null)
+            {
+                result.StatusCode = HttpStatusCode.NotFound;
                 return result;
+            }
 
             var tempDir = System.Web.Hosting.HostingEnvironment.MapPath("\\App_Data\\Temp");
             var guid = Guid.NewGuid();
@@ -48,10 +40,11 @@ namespace $rootnamespace$.Controllers
 
             handler.GenerateFiles(resultDirPath);
 
-            if (WillRetunZip(resultDirPath, RepositoryResolver.RepositoryTypes[formName]))
+            if (WillRetunZip(resultDirPath, formName))
             {
                 var zipDir = CreateDirectoryRecursively(zipDirPath);
-                var zipName = RepositoryResolver.GetZipName(RepositoryResolver.RepositoryTypes[formName]);
+                var zipName = RepositoryResolver.GetZipName(formName);
+                if(string.IsNullOrEmpty(zipName)) { zipName = DEFAULT_ZIP_NAME; }
                 var doc = GetZipFile(resultDirPath, zipDirPath, zipName);
                 result = GetFileContent(doc);
                 DeleteDir(zipDirPath);
@@ -103,7 +96,6 @@ namespace $rootnamespace$.Controllers
         {
             //Помещаем все файлы в один архив
             var doc = new FileDocument();
-            if (string.IsNullOrEmpty(zipFileName)) { zipFileName = DEFAULT_ZIP_NAME; }
             if (!zipFileName.EndsWith(".zip")) { zipFileName += ".zip"; }
             var zipPath = string.Format(@"{0}\{1}", zipDir, zipFileName);
             if (File.Exists(zipPath)) { File.Delete(zipPath); }
@@ -133,10 +125,10 @@ namespace $rootnamespace$.Controllers
         }
 
         [NonAction]
-        bool WillRetunZip(string resultDir, Type repositoryType = null)
+        bool WillRetunZip(string resultDir, string formName)
         {
             DirectoryInfo resultDirInfo = new DirectoryInfo(resultDir);
-            return resultDirInfo.GetFiles().Length > 1 || RepositoryResolver.DoesReturnZip(repositoryType);
+            return resultDirInfo.GetFiles().Length > 1 || !string.IsNullOrEmpty(RepositoryResolver.GetZipName(formName));
         }
 
 

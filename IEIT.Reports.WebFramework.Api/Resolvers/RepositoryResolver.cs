@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using IEIT.Reports.WebFramework.Core.Interfaces;
 using IEIT.Reports.WebFramework.Core.Attributes;
+using System.Text.RegularExpressions;
 
 namespace IEIT.Reports.WebFramework.Api.Resolvers
 {
@@ -12,6 +13,13 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
     /// </summary>
     public static class RepositoryResolver
     {
+
+        public struct Bundle
+        {
+            public Type RepositoryType;
+            public Type HandlerType;
+        }
+
         /// <summary>
         /// Обработчик отчетов по умолчанию. Пустой изначально.
         /// </summary>
@@ -20,7 +28,7 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
         /// <summary>
         /// Справочник соответствии названии отчетов к типам репозиториев
         /// </summary>
-        public static Dictionary<string, Type> RepositoryTypes { get; set; }
+        public static Dictionary<string, Bundle> Bundles { get; set; }
         
 
         /// <summary>
@@ -28,31 +36,55 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
         /// </summary>
         public static void InitRepositories()
         {
-            if(RepositoryTypes != null)
+            if(Bundles != null)
             {
                 return;
             }
+            
 
             var _repositories =
                 from a in AppDomain.CurrentDomain.GetAssemblies()
                 from t in a.GetTypes()
-                let attributes = t.GetCustomAttributes(typeof(RepositoryForAttribute), true)
-                where attributes != null && attributes.Length > 0
-                select new { Type = t, Attribute = attributes.Cast<RepositoryForAttribute>().FirstOrDefault()};
+                let rAttributes = t.GetCustomAttributes(typeof(RepositoryForAttribute), true)
+                let hAttributes = t.GetCustomAttributes(typeof(HasHandlerAttribute), true)
+                where rAttributes != null && rAttributes.Length > 0
+                select new { Type = t, rAttribute = rAttributes.Cast<RepositoryForAttribute>().FirstOrDefault(), hAttrbute = hAttributes.Cast<HasHandlerAttribute>().FirstOrDefault()};
 
-            RepositoryTypes = new Dictionary<string, Type>();
+            Bundles = new Dictionary<string, Bundle>();
+            var handlers = GetAllHandlers();
 
             foreach(var _repo in _repositories)
             {
-                var formNames = _repo.Attribute.FormNames;
+                var formNames = _repo.rAttribute.FormNames;
+                var handlerName = _repo.hAttrbute == null ? null : _repo.hAttrbute.HandlerName;
                 foreach(var formName in formNames)
                 {
-                    if (RepositoryTypes.ContainsKey(formName)) { throw new Exception($"Выгружаемая форма '{formName}' уже существует!"); }
-                    RepositoryTypes.Add(formName, _repo.Type);
+                    if (Bundles.ContainsKey(formName)) { throw new Exception($"Выгружаемая форма '{formName}' уже существует!"); }
+
+                    Type handlerType = null;
+                    if (_repo.hAttrbute != null && !string.IsNullOrEmpty(_repo.hAttrbute.HandlerName))
+                    {
+                        Regex regex = new Regex(Regex.Escape(_repo.hAttrbute.HandlerName) + "(Handler)?");
+                        handlerType = handlers.FirstOrDefault(h => regex.IsMatch(h.Name));
+                    }
+
+                    Bundles.Add(formName, new Bundle { RepositoryType = _repo.Type, HandlerType = handlerType });
                 }
             }
             
         }
+
+        private static Type[] GetAllHandlers()
+        {
+            var handlers =
+                from a in AppDomain.CurrentDomain.GetAssemblies()
+                from t in a.GetTypes()
+                let handlerInterface = t.GetInterface(typeof(IHandler).Name)
+                where !t.IsInterface && handlerInterface != null
+                select t;
+            return handlers.ToArray();
+        }
+        
 
         /// <summary>
         /// Получить репозитории по названию отчета
@@ -62,9 +94,10 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
         /// <returns>Объект репозитория</returns>
         public static object GetRepositoryFor(string formName, NameValueCollection queryParams = null)
         {
-            if (RepositoryTypes == null || !RepositoryTypes.ContainsKey(formName)) { return null; }
-            var repoType = RepositoryTypes[formName];
+            if (Bundles == null || !Bundles.ContainsKey(formName)) { return null; }
+            var bundle = Bundles[formName];
             var repoInterfaceName = typeof(IRepository).Name;
+            var repoType = bundle.RepositoryType;
             if(repoType.GetInterface(repoInterfaceName) != null)
             {
                 var repo = Activator.CreateInstance(repoType) as IRepository;
@@ -88,38 +121,41 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
         /// <returns>Обработчик файла</returns>
         public static IHandler GetHandlerFor(string formName, NameValueCollection queryParams = null)
         {
-            Type handlerType = null;
+            if (!Bundles.ContainsKey(formName)) { return null; }
+            Type handlerType = Bundles[formName].HandlerType;
+            if (handlerType == null && DefaultHandler == null) { return null; }
+            if (handlerType == null) { handlerType = DefaultHandler; }
             var repo = GetRepositoryFor(formName, queryParams);
             if (repo == null) { return null; }
             var attr = repo.GetAttributesOfType<HasHandlerAttribute>().FirstOrDefault();
-            if (attr != null) { handlerType = attr.HandlerType; }
-            if (handlerType == null) { handlerType = DefaultHandler; }
             var instance = (IHandler)Activator.CreateInstance(handlerType);
             instance.InitializeRepo(repo);
             return instance;
         }
-
-        /// <summary>
-        /// Определяет должен ли возвращаться файл относящиеся к данному репозиторию в виде архива.
-        /// </summary>
-        /// <param name="repository">Репозитории, для которого требуется это узнать</param>
-        /// <returns>true - если да, false - нет</returns>
-        public static bool DoesReturnZip(object repository)
-        {
-            if(repository == null) { return false; }
-            return repository.HasAttributesOfType<ReturnsZipAttribute>();
-        }
+        
 
         /// <summary>
         /// Получить название архива для файлов относящиеся к данному репозиторию
         /// </summary>
         /// <param name="repository">Репозитории, для которого требуется это узнать</param>
-        /// <returns>Название файла архива или <see cref="string.Empty"/> если не найдено.</returns>
+        /// <returns>Название файла архива или <see cref="string.Empty"/> если не найдено</returns>
         public static string GetZipName(object repository)
         {
-            if(repository == null) { return null; }
+            if(repository == null) { return string.Empty; }
             ReturnsZipAttribute attr = repository.GetAttributesOfType<ReturnsZipAttribute>().FirstOrDefault();
             return attr != null ? attr.Name : string.Empty;
+        }
+
+        /// <summary>
+        /// Получить название архива для файлов относящиеся к данному репозиторию
+        /// </summary>
+        /// <param name="formName">Наименование отчета для которого нужно это узнать</param>
+        /// <returns>Название файла архива или <see cref="string.Empty"/> если не найдено</returns>
+        public static string GetZipName(string formName)
+        {
+            if (!Bundles.ContainsKey(formName)) { return string.Empty; }
+            var repoType = Bundles[formName].RepositoryType;
+            return GetZipName(repoType);
         }
 
         /// <summary>

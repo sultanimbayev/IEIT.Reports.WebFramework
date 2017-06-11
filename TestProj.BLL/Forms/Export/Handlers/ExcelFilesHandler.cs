@@ -22,10 +22,8 @@ namespace TestProj.BLL.Forms.Export.Handlers
         {
             var fileName = Repository.FileNames[0];
             string filePath = $@"{inDir}\{fileName}";
-            string filePath2 = $@"{inDir}\2{fileName}";
-            var templatePath = TemplateResolver.ResolveFilePath(Repository.TemplateId); //System.Web.Hosting.HostingEnvironment.MapPath($@"\{Template.TemplatePath}\{Template.TemplateName}");
+            var templatePath = TemplateResolver.ResolveFilePath(Repository.TemplateId);
             File.Copy(templatePath, filePath);
-            File.Copy(templatePath, filePath2);
 
             using (var excelDoc = SpreadsheetDocument.Open(filePath, true))
             {

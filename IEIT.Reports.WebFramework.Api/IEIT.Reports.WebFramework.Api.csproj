@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Resolvers\Utils.cs" />
     <None Include="content\App_Start\ReportsHandlerConfig.cs.pp" />
     <None Include="content\Controllers\ReportExportController.cs.pp" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="content\Forms\TemplateFiles\Put your template files here.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resolvers\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

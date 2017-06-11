@@ -14,7 +14,7 @@ using IEIT.Reports.WebFramework.Core.Interfaces;
 namespace TestProj.BLL.Forms.Export.Repositories
 {
     [RepositoryFor("HumanExcelInfo")]
-    [HasHandler(typeof(ExcelFilesHandler))]
+    [HasHandler("ExcelFilesHandler")]
     [ReturnsZip("ExcelExamples")]
     public class ExcelRepo : ISimpleExcelRepository, IRepository
     {
