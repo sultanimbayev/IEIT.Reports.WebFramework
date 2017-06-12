@@ -1,0 +1,5 @@
+﻿<configuration>
+  <appSettings>
+    <add key="WebFramework.TemplatesPath" value="..\Forms\TemplateFiles" />
+  </appSettings>
+</configuration>

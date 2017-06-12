@@ -11,7 +11,7 @@ using $rootnamespace$.Forms.Export.Handlers;
 namespace $rootnamespace$.Forms.Export.Repositories
 {
     [RepositoryFor("HumanInfo")]
-    [HasHandler("WordFileHandler)]
+    [HasHandler("WordFileHandler")]
     public class HumanDetailsRepo: IReplacerRepository
     {
         public List<string> FileNames { get; set; }
