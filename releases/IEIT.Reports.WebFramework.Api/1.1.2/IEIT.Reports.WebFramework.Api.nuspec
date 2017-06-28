@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>IEIT.Reports.WebFramework.Api</id>
+    <version>1.1.2</version>
+    <authors>sultan.imbayev</authors>
+    <owners>IPEIT KBTU</owners>
+    <projectUrl>https://github.com/sultanimbayev/IEIT.Reports.WebFramework</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+		Для выгрузки отчета в Web проекте через Api. 
+		Предоставдляет фреймворк для скачивания и формирование файлов
+		отчетов в формате
+		Excel или Word.
+	</description>
+    <releaseNotes>
+		-Добавлена функция добавления названий отчетов на разных языках 
+		и их получение в контроллере
+	</releaseNotes>
+    <tags>Excel Api DownloadManager</tags>
+    <dependencies>
+      <dependency id="WebActivatorEx" version="2.2.0" />
+	  <dependency id="IEIT.Reports.WebFramework.Core" version="[1.1.2]" />
+    </dependencies>
+	<frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Web" />
+	  <frameworkAssembly assemblyName="System.IO.Compression.FileSystem"/>
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+	<file src="..\..\..\IEIT.Reports.WebFramework.Api\bin\Release\IEIT.Reports.WebFramework.Api.dll" target="lib\net45"/>
+	<file src="..\..\..\IEIT.Reports.WebFramework.Api\content\**" target="content" />
+  </files>
+</package>

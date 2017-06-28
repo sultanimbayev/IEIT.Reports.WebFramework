@@ -10,12 +10,14 @@ using TestProj.BLL.Forms.Export.Handlers;
 using IEIT.Reports.WebFramework.Core.Resolvers;
 using IEIT.Reports.Export.Helpers.Spreadsheet;
 using IEIT.Reports.WebFramework.Core.Interfaces;
+using IEIT.Reports.WebFramework.Core.Enum;
 
 namespace TestProj.BLL.Forms.Export.Repositories
 {
     [RepositoryFor("HumanExcelInfo")]
     [HasHandler("ExcelFilesHandler")]
     [ReturnsZip("ExcelExamples")]
+    [DisplayName(DisplayLanguage.Russian, "Отчет о данных пользователя")]
     public class ExcelRepo : ISimpleExcelRepository, IRepository
     {
         public List<string> FileNames { get; set; }

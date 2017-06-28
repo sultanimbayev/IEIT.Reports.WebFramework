@@ -5,6 +5,7 @@ using System.Linq;
 using IEIT.Reports.WebFramework.Core.Interfaces;
 using IEIT.Reports.WebFramework.Core.Attributes;
 using System.Text.RegularExpressions;
+using IEIT.Reports.WebFramework.Core.Enum;
 
 namespace IEIT.Reports.WebFramework.Api.Resolvers
 {
@@ -30,7 +31,6 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
         /// </summary>
         public static Dictionary<string, Bundle> Bundles { get; set; }
         
-
         /// <summary>
         /// Иницализирует типы репозиториев для выгружаемых файлов.
         /// </summary>
@@ -49,6 +49,7 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
                 let hAttributes = t.GetCustomAttributes(typeof(HasHandlerAttribute), true)
                 where rAttributes != null && rAttributes.Length > 0
                 select new { Type = t, rAttribute = rAttributes.Cast<RepositoryForAttribute>().FirstOrDefault(), hAttrbute = hAttributes.Cast<HasHandlerAttribute>().FirstOrDefault()};
+
 
             Bundles = new Dictionary<string, Bundle>();
             var handlers = GetAllHandlers();
@@ -146,6 +147,69 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
             return attr != null ? attr.Name : string.Empty;
         }
 
+
+        /// <summary>
+        /// Получить название отчета на выбранном языке. 
+        /// Возвращает null если название не найдено.
+        /// </summary>
+        /// <param name="formName">Имя отчета в системе выгрузки</param>
+        /// <param name="langCode">Код языка в формате ISO 639-1</param>
+        /// <returns>Название отчета на выбранном языке, или null если название не найдено</returns>
+        public static string GetDisplayName(string formName, string langCode)
+        {
+            if (!Bundles.ContainsKey(formName)) { return null; }
+            var lang = Utils.GetLang(langCode);
+            return GetDisplayName(formName, lang);
+        }
+
+        /// <summary>
+        /// Получить название отчета на выбранном языке. 
+        /// Возвращает null если название не найдено.
+        /// </summary>
+        /// <param name="formName">Имя отчета в системе выгрузки</param>
+        /// <param name="lang">Язык на котором требуется найти название</param>
+        /// <returns>Название отчета на выбранном языке, или null если название не найдено</returns>
+        public static string GetDisplayName(string formName, DisplayLanguage lang)
+        {
+            var repo = Bundles[formName].RepositoryType;
+            var dAttrs = repo.GetAttributesOfType<DisplayNameAttribute>();
+            var disp = dAttrs.FirstOrDefault(attr => attr.Lang == lang);
+            if (disp == null) { return null; }
+            return disp.DisplayName;
+        }
+
+        /// <summary>
+        /// Получить название для всех отчетов на выбранном языке.
+        /// Первое значение (значение-ключ) будет именем отчета в системе выгрузки
+        /// Второе значение будет null если название на выбранном языке не найдено.
+        /// </summary>
+        /// <param name="langCode">Код языка в формате ISO 639-1</param>
+        /// <returns>Название отчетов на выбранном языке</returns>
+        public static Dictionary<string, string> GetDisplayNames(string langCode)
+        {
+            var lang = Utils.GetLang(langCode);
+            return GetDisplayNames(lang);
+        }
+
+        /// <summary>
+        /// Получить название для всех отчетов на выбранном языке.
+        /// Первое значение (значение-ключ) будет именем отчета в системе выгрузки
+        /// Второе значение будет null если название на выбранном языке не найдено.
+        /// </summary>
+        /// <param name="lang">Язык на котором требуется найти названия</param>
+        /// <returns>Название отчетов на выбранном языке</returns>
+        public static Dictionary<string, string> GetDisplayNames(DisplayLanguage lang)
+        {
+            var formNames = Bundles.Keys;
+            var result = new Dictionary<string, string>();
+            foreach (var formName in formNames)
+            {
+                var dispName = GetDisplayName(formName, lang);
+                result.Add(formName, dispName);
+            }
+            return result;
+        }
+
         /// <summary>
         /// Получить название архива для файлов относящиеся к данному репозиторию
         /// </summary>
@@ -157,7 +221,8 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
             var repoType = Bundles[formName].RepositoryType;
             return GetZipName(repoType);
         }
-
+        
+        
         /// <summary>
         /// Получить атрибуты заданного типа
         /// </summary>
@@ -185,6 +250,7 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
             else { attrs = obj.GetType().GetCustomAttributes(typeof(T), true); }
             return attrs != null && attrs.Count() > 0;
         }
+        
 
     }
 }

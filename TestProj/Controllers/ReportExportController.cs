@@ -16,6 +16,7 @@ namespace TestProj.Controllers
     public class ReportExportController : ApiController
     {
         private const string DEFAULT_ZIP_NAME = "Выходные данные.zip";
+        private const string API_ROUTE_BASE = "api/Files/DownloadForm/";
 
         /// <summary>
         /// Для скачивания форм
@@ -23,7 +24,7 @@ namespace TestProj.Controllers
         /// <param name="formName">Название формы</param>
         /// <returns>HTTP ответ с файлом указанной формы или архивом содержащий запрошенные отчеты</returns>
         [HttpGet]
-        [Route("api/Files/DownloadForm/{formName}")]
+        [Route(API_ROUTE_BASE + "{formName}")]
         public HttpResponseMessage DownloadForm(string formName)
         {
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.InternalServerError);
