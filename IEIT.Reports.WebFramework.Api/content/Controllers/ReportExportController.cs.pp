@@ -1,4 +1,5 @@
 ﻿using IEIT.Reports.WebFramework.Api.Resolvers;
+using IEIT.Reports.WebFramework.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
