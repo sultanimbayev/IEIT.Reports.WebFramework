@@ -44,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IEIT.Reports.WebFramework.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IEIT.Reports.WebFramework.Api.1.2.1\lib\net45\IEIT.Reports.WebFramework.Api.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IEIT.Reports.WebFramework.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IEIT.Reports.WebFramework.Core.1.2.0\lib\net45\IEIT.Reports.WebFramework.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -260,6 +268,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Forms\TemplateFiles\Put your template files here.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -326,14 +335,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IEIT.Reports.WebFramework.Api\IEIT.Reports.WebFramework.Api.csproj">
-      <Project>{08718e4e-8d96-42ac-b28a-7c030be1a2c1}</Project>
-      <Name>IEIT.Reports.WebFramework.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IEIT.Reports.WebFramework.Core\IEIT.Reports.WebFramework.Core.csproj">
-      <Project>{370bae7f-8de5-49ec-8bb3-bfd2ae6ef741}</Project>
-      <Name>IEIT.Reports.WebFramework.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TestProj.BLL\TestProj.BLL.csproj">
       <Project>{5f100175-53f7-40e2-a65a-afc9c0109bbd}</Project>
       <Name>TestProj.BLL</Name>

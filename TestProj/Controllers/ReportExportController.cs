@@ -1,4 +1,4 @@
-﻿using IEIT.Reports.WebFramework.Api.Resolvers;
+using IEIT.Reports.WebFramework.Api.Resolvers;
 using IEIT.Reports.WebFramework.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace TestProj.Controllers
 {
     public class ReportExportController : ApiController
     {
-        private const string DEFAULT_ZIP_NAME = "Выходные данные.zip";
+		private const string DEFAULT_ZIP_NAME = "Выходные данные.zip";
         private const string API_ROUTE_BASE = "api/Files/DownloadForm/";
 
         /// <summary>
@@ -28,9 +28,8 @@ namespace TestProj.Controllers
         [Route(API_ROUTE_BASE + "{formName}")]
         public HttpResponseMessage DownloadForm(string formName)
         {
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+			HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             var queryParams = HttpContext.Current.Request.QueryString;
-
             IFileGenerator fileGenerator = RepositoryResolver.GetFileGeneratorFor(formName, queryParams);
 
             if (fileGenerator == null)
