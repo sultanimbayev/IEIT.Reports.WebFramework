@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Attributes\DisplayNameAttribute.cs" />
     <Compile Include="Attributes\HasHandlerAttribute.cs" />
+    <Compile Include="Attributes\ReportAttribute.cs" />
     <Compile Include="Attributes\RepositoryForAttribute.cs" />
     <Compile Include="Attributes\ReturnsZipAttribute.cs" />
     <Compile Include="Interfaces\IHandler.cs" />
