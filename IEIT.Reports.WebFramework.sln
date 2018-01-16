@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IEIT.Reports.WebFramework.Core", "IEIT.Reports.WebFramework.Core\IEIT.Reports.WebFramework.Core.csproj", "{370BAE7F-8DE5-49EC-8BB3-BFD2AE6EF741}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProj", "TestProj\TestProj.csproj", "{DBC0CCDD-503C-496D-B43D-50BB8210A2AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProj.BLL", "TestProj.BLL\TestProj.BLL.csproj", "{5F100175-53F7-40E2-A65A-AFC9C0109BBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "UnitTestProject\UnitTestProject.csproj", "{119EAE46-0A23-40DB-8153-F66075859D5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5F100175-53F7-40E2-A65A-AFC9C0109BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F100175-53F7-40E2-A65A-AFC9C0109BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F100175-53F7-40E2-A65A-AFC9C0109BBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{119EAE46-0A23-40DB-8153-F66075859D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{119EAE46-0A23-40DB-8153-F66075859D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{119EAE46-0A23-40DB-8153-F66075859D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{119EAE46-0A23-40DB-8153-F66075859D5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

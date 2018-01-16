@@ -1,8 +1,7 @@
 ﻿namespace IEIT.Reports.WebFramework.Core.Interfaces
 {
-    public interface IHandler
+    public interface IHandler: IFileGenerator
     {
         void InitializeRepo(object repository);
-        void GenerateFiles(string inDir);
     }
 }

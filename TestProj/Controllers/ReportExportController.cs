@@ -1,4 +1,5 @@
-﻿using IEIT.Reports.WebFramework.Api.Resolvers;
+using IEIT.Reports.WebFramework.Api.Resolvers;
+using IEIT.Reports.WebFramework.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +16,7 @@ namespace TestProj.Controllers
 {
     public class ReportExportController : ApiController
     {
-        private const string DEFAULT_ZIP_NAME = "Выходные данные.zip";
+		private const string DEFAULT_ZIP_NAME = "Выходные данные.zip";
         private const string API_ROUTE_BASE = "api/Files/DownloadForm/";
 
         /// <summary>
@@ -27,17 +28,16 @@ namespace TestProj.Controllers
         [Route(API_ROUTE_BASE + "{formName}")]
         public HttpResponseMessage DownloadForm(string formName)
         {
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+			HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             var queryParams = HttpContext.Current.Request.QueryString;
-            
-            var handler = RepositoryResolver.GetHandlerFor(formName, queryParams);
+            IFileGenerator fileGenerator = RepositoryResolver.GetFileGeneratorFor(formName, queryParams);
 
-            if (handler == null)
+            if (fileGenerator == null)
             {
                 result.StatusCode = HttpStatusCode.NotFound;
                 return result;
             }
-
+            
             var tempDir = System.Web.Hosting.HostingEnvironment.MapPath("\\App_Data\\Temp");
             var guid = Guid.NewGuid();
             var resultDirPath = $@"{tempDir}\{DateTime.Now:dd.MM.yyyy}_Files_{guid}";
@@ -50,7 +50,7 @@ namespace TestProj.Controllers
                 return result;
             }
 
-            handler.GenerateFiles(resultDirPath);
+            fileGenerator.GenerateFiles(resultDirPath);
 
             if (WillRetunZip(resultDirPath, formName))
             {
@@ -68,7 +68,7 @@ namespace TestProj.Controllers
             }
 
             DeleteDir(resultDirPath);
-
+            
             return result;
         }
 
