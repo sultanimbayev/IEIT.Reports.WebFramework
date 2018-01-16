@@ -75,6 +75,13 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
             
         }
 
+        public static IFileGenerator GetFileGeneratorFor(string formName, NameValueCollection queryParams)
+        {
+            var handler = RepositoryResolver.GetHandlerFor(formName, queryParams);
+            var report = RepositoryResolver.GetReportFor(formName, queryParams);
+            return handler as IFileGenerator ?? report;
+        }
+
         private static Type[] GetAllHandlers()
         {
             var handlers =
@@ -85,7 +92,6 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
                 select t;
             return handlers.ToArray();
         }
-        
 
         /// <summary>
         /// Получить репозитории по названию отчета
@@ -250,7 +256,32 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
             else { attrs = obj.GetType().GetCustomAttributes(typeof(T), true); }
             return attrs != null && attrs.Count() > 0;
         }
-        
 
+        private static IEnumerable<Type> ReportsCache;
+
+        public static IEnumerable<Type> GetAllReports()
+        {
+            return ReportsCache ?? (ReportsCache = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(type => type.GetCustomAttributes(typeof(ReportAttribute), true).Any()));
+        }
+
+        public static string RemoveReportSuffix(string input) {
+            return new Regex("Report$").Replace(input, ""); 
+        }
+
+        public static IReport GetReportFor(string name, NameValueCollection query)
+        {
+            var report = GetAllReports().FirstOrDefault(r => RemoveReportSuffix(r.Name) == name);
+            if(report == null) return null;
+
+            if (report.GetConstructor(new Type[] { typeof(NameValueCollection) }) == null)
+            {
+                throw new EntryPointNotFoundException($"Класс '{report.Name}' должен иметь конструктор принимающий NameValueCollection");
+            }
+            var constructorParams = new object[] { query };
+            var instance = Activator.CreateInstance(report, constructorParams);
+            return instance as IReport;
+        }
     }
 }

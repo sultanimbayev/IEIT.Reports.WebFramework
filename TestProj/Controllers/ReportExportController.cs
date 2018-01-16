@@ -1,4 +1,5 @@
 ﻿using IEIT.Reports.WebFramework.Api.Resolvers;
+using IEIT.Reports.WebFramework.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,15 +30,15 @@ namespace TestProj.Controllers
         {
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             var queryParams = HttpContext.Current.Request.QueryString;
-            
-            var handler = RepositoryResolver.GetHandlerFor(formName, queryParams);
 
-            if (handler == null)
+            IFileGenerator fileGenerator = RepositoryResolver.GetFileGeneratorFor(formName, queryParams);
+
+            if (fileGenerator == null)
             {
                 result.StatusCode = HttpStatusCode.NotFound;
                 return result;
             }
-
+            
             var tempDir = System.Web.Hosting.HostingEnvironment.MapPath("\\App_Data\\Temp");
             var guid = Guid.NewGuid();
             var resultDirPath = $@"{tempDir}\{DateTime.Now:dd.MM.yyyy}_Files_{guid}";
@@ -50,7 +51,7 @@ namespace TestProj.Controllers
                 return result;
             }
 
-            handler.GenerateFiles(resultDirPath);
+            fileGenerator.GenerateFiles(resultDirPath);
 
             if (WillRetunZip(resultDirPath, formName))
             {
@@ -68,7 +69,7 @@ namespace TestProj.Controllers
             }
 
             DeleteDir(resultDirPath);
-
+            
             return result;
         }
 
