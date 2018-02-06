@@ -60,6 +60,7 @@
     <Compile Include="ReportResolverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LangUtilsTest.cs" />
+    <Compile Include="ApiIntegrationTest.cs" />
     <Compile Include="UtilsTest.cs" />
   </ItemGroup>
   <ItemGroup>

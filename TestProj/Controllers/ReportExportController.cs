@@ -1,4 +1,4 @@
-﻿using IEIT.Reports.WebFramework.Api.Resolvers;
+using IEIT.Reports.WebFramework.Api.Resolvers;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;

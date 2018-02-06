@@ -7,12 +7,14 @@ using TestProj.BLL.Forms.Export.Repositories.Interfaces;
 using TestProj.BLL.Forms.Export.Models.Interfaces;
 using TestProj.BLL.Forms.Export.Handlers;
 using IEIT.Reports.WebFramework.Core.Attributes;
+using IEIT.Reports.WebFramework.Core.Interfaces;
 
 namespace TestProj.BLL.Forms.Export.Repositories
 {
     //[RepositoryFor("HumanInfo")]
     //[HasHandler(typeof(WordFileHandler))]
-    public class HumanDetailsRepo: IReplacerRepository
+    [Report]
+    public class HumanInfoReport : IReport, IReplacerRepository
     {
         public List<string> FileNames { get; set; }
 
@@ -23,7 +25,7 @@ namespace TestProj.BLL.Forms.Export.Repositories
         public string TemplateId { get; set; } = "wordExample";
 
 
-        public HumanDetailsRepo(NameValueCollection queryParams)
+        public HumanInfoReport(NameValueCollection queryParams)
         {
             DocData = new DocData();
 
@@ -65,7 +67,12 @@ namespace TestProj.BLL.Forms.Export.Repositories
 			public string region {get;set;}
 			public string workPlace {get;set;}
 		}
-		
 
+        public void GenerateFiles(string inDir)
+        {
+            var h = new WordFileHandler();
+            h.InitializeRepo(this);
+            h.GenerateFiles(inDir);
+        }
     }
 }

@@ -14,17 +14,15 @@ using IEIT.Reports.WebFramework.Core.Enum;
 
 namespace TestProj.BLL.Forms.Export.Repositories
 {
-    //[RepositoryFor("HumanExcelInfo")]
-    //[HasHandler("ExcelFilesHandler")]
+    [Report]
     [ReturnsZip("ExcelExamples")]
     [DisplayName(DisplayLanguage.Russian, "Отчет о данных пользователя")]
-    public class ExcelRepo : ISimpleExcelRepository, IRepository
+    public class HumanExcelInfoReport : IReport, ISimpleExcelRepository
     {
         public List<string> FileNames { get; set; }
         public List<IExcelCell> ExcelCells { get; set; }
         public string TemplateId { get; set; } = "excelExample.xlsx";
-
-        public void Init(NameValueCollection queryParams)
+        public HumanExcelInfoReport(NameValueCollection queryParams)
         {
             var fileName = $@"ExcelExample {DateTime.Now:dd.MM.yyyy}.xlsx";
             FileNames = new List<string>()
@@ -72,8 +70,15 @@ namespace TestProj.BLL.Forms.Export.Repositories
 			
 			
         }
-		
-		private class Person{
+
+        public void GenerateFiles(string inDir)
+        {
+            var handler = new ExcelFilesHandler();
+            handler.InitializeRepo(this);
+            handler.GenerateFiles(inDir);
+        }
+
+        private class Person{
 			public string Name { get; set; }
 			public DateTime birthDate {get;set;}
 			public string Phone {get;set;}
