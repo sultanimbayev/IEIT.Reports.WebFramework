@@ -10,8 +10,8 @@ using IEIT.Reports.WebFramework.Core.Attributes;
 
 namespace TestProj.BLL.Forms.Export.Repositories
 {
-    [RepositoryFor("HumanInfo")]
-    [HasHandler(typeof(WordFileHandler))]
+    //[RepositoryFor("HumanInfo")]
+    //[HasHandler(typeof(WordFileHandler))]
     public class HumanDetailsRepo: IReplacerRepository
     {
         public List<string> FileNames { get; set; }

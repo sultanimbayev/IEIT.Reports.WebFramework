@@ -33,6 +33,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Resolvers\FileDocument.cs" />
+    <Compile Include="Resolvers\FileUtils.cs" />
+    <Compile Include="Resolvers\LangUtils.cs" />
     <Compile Include="Resolvers\Utils.cs" />
-    <None Include="content\App_Start\ReportsHandlerConfig.cs.pp" />
     <None Include="content\Controllers\ReportExportController.cs.pp" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resolvers\RepositoryResolver.cs" />
+    <Compile Include="Resolvers\ReportResolver.cs" />
     <None Include="content\Web.config.transform" />
   </ItemGroup>
   <ItemGroup>

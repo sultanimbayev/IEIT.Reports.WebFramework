@@ -6,4 +6,8 @@ namespace IEIT.Reports.WebFramework.Core.Interfaces
     {
         void Init(NameValueCollection queryParams);
     }
+    public interface IReportWithHandler
+    {
+        void Init(NameValueCollection queryParams);
+    }
 }

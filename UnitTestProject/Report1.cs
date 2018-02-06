@@ -3,6 +3,7 @@ using IEIT.Reports.WebFramework.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,17 @@ using System.Threading.Tasks;
 namespace UnitTestProject
 {
     [Report]
+    [ReturnsZip("CustomName")]
     class Report1 : IReport
     {
+        public Report1(NameValueCollection query)
+        {
+
+        }
         public void GenerateFiles(string inDir)
         {
-            throw new NotImplementedException();
+            File.WriteAllText(inDir + "/1.txt", "some text");
+
         }
     }
     [Report]
@@ -26,7 +33,9 @@ namespace UnitTestProject
         }
         public void GenerateFiles(string inDir)
         {
-            throw new NotImplementedException();
+            // create 2 files
+            File.WriteAllText(inDir + "/1.txt", "some text");
+            File.WriteAllText(inDir + "/2.txt", "some text 2");
         }
     }
 
@@ -43,7 +52,7 @@ namespace UnitTestProject
 
         public void GenerateFiles(string inDir)
         {
-            throw new NotImplementedException();
+            File.WriteAllText(inDir + "/1.txt", "some text");
         }
     }
 }

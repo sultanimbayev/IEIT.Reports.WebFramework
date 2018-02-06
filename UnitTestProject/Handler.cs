@@ -19,8 +19,8 @@ namespace UnitTestProject
             //throw new NotImplementedException();
         }
     }
-    [HasHandler("Handler")]
-    [RepositoryFor("Handler")]
+    //[HasHandler("Handler")]
+    //[RepositoryFor("Handler")]
     class Repository
     {
         public Repository(NameValueCollection c)
