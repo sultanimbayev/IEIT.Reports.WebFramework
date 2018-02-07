@@ -30,11 +30,17 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
         private static IEnumerable<Type> ReportsCache;
         public static IEnumerable<Type> GetAllReports()
         {
-            return ReportsCache ?? (
+            if(ReportsCache == null)
+            {
+                foreach(var assembly in Assembly.GetExecutingAssembly().GetReferencedAssemblies())
+                    AppDomain.CurrentDomain.Load(assembly);
+                
                 ReportsCache = AppDomain.CurrentDomain.GetAssemblies()
                     .SelectMany(assembly => assembly.GetTypes())
-                    .Where(type =>  type.GetCustomAttribute<ReportAttribute>() != null)
-                );
+                    .Where(type => type.GetCustomAttribute<ReportAttribute>() != null);
+            }
+
+            return ReportsCache;
         }
         public static string RemoveReportSuffix(string input) {
             return new Regex("Report$").Replace(input, ""); 
