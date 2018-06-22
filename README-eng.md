@@ -20,10 +20,10 @@ After installation, `ReportExportController.cs` will be created in `~\Controller
 private const string API_ROUTE_BASE = "api/Files/DownloadForm/";
 ```
 
-It it the url for downloading. Remember it to download and check your files that you make downloadable. 
+It is the url for downloading. Remember it to download and check your files that you make downloadable. 
 
 Next, create a class at any place in your solution. 
-If you place this class in different project than the controller is, then you must add a reference to a project where your new class is.
+If you place this class in different project than the controller is, then you must add a reference to a project where your new class is, and install the IEIT.Reports.WebFramework.Core package in it.
 Then, add the namespaces:
 
 ```C#
