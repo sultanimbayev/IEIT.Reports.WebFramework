@@ -1,5 +1,7 @@
 # IEIT.Reports.WebFramework
 
+[Read the english version](README-eng.md)
+
 Фреймворк для выгрузки файлов в ASP.NET MVC.
 
 ## Установить
@@ -29,24 +31,34 @@ using IEIT.Reports.WebFramework.Core.Attributes;
 using IEIT.Reports.WebFramework.Core.Interfaces;
 ```
 
-Добавьте атрибут Report, добавьте конструктор принимающий объект NameValueCollection и реализуйте интерфейс IReport в своем классе. Пример:
+Сделайте следующие шаги для создание выгружаемого файла:
+ 1. Добавьте атрибут `Report` к созданному классу.
+ 2. Добавьте конструктор принимающий объект `NameValueCollection`.
+ 3. Реализуйте интерфейс `IReport` в своем классе. 
+
+ Пример:
 
 ```C#
 [Report]
 public class MyFileReport: IReport
 {
+	public string Name { get; set; }
+	
     public MyFileReport(NameValueCollection queryParams)
     {
+		Name = queryParams["name"] ?? "there";
     }
     public void GenerateFiles(string inDir)
     {
             var path = Path.Combine(inDir, "newFile.txt");
-            File.WriteAllText(path, "Hello there!");
+            File.WriteAllText(path, $"Hello {Name}!");
     }
 
 }
 ```
 
-Все, теперь вы можете выгрузить свой файл по ссылке `api/Files/DownloadForm/MyFile
+Все, теперь вы можете выгрузить свой файл по ссылке `/api/Files/DownloadForm/MyFile?name=Sultan`
 
-queryParams - это параметры запроса выгружаемого файла методом GET
+`queryParams` - это параметры запроса выгружаемого файла методом GET
+
+`inDir` - путь к папке где следует создать выгружаемые файлы
