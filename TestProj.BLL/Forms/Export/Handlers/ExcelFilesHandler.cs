@@ -1,10 +1,10 @@
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using IEIT.Reports.WebFramework.Core.Interfaces;
-using IEIT.Reports.WebFramework.Core.Resolvers;
 using System.Linq;
 using IEIT.Reports.Export.Helpers.Spreadsheet;
 using TestProj.BLL.Forms.Export.Repositories.Interfaces;
+using IEIT.TemplateResolver;
 
 namespace TestProj.BLL.Forms.Export.Handlers
 {

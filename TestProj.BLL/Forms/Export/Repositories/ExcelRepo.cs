@@ -7,10 +7,10 @@ using TestProj.BLL.Forms.Export.Repositories.Interfaces;
 using TestProj.BLL.Forms.Export.Models.Interfaces;
 using IEIT.Reports.WebFramework.Core.Attributes;
 using TestProj.BLL.Forms.Export.Handlers;
-using IEIT.Reports.WebFramework.Core.Resolvers;
 using IEIT.Reports.Export.Helpers.Spreadsheet;
 using IEIT.Reports.WebFramework.Core.Interfaces;
 using IEIT.Reports.WebFramework.Core.Enum;
+using IEIT.TemplateResolver;
 
 namespace TestProj.BLL.Forms.Export.Repositories
 {
@@ -35,7 +35,7 @@ namespace TestProj.BLL.Forms.Export.Repositories
             var templatePath = TemplateResolver.ResolveFilePath(TemplateId);
 				
             uint commonStyle = 0;
-            uint dateStyle = 0;
+            //uint dateStyle = 0;
             using (var excelDoc = SpreadsheetDocument.Open(templatePath, true))
             {
                 commonStyle = excelDoc.GetWorksheet("list").GetCell("A1").StyleIndex;

@@ -56,7 +56,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="TemplateResolverTest.cs" />
     <Compile Include="Handler.cs" />
     <Compile Include="Report1.cs" />
     <Compile Include="ReportResolverTest.cs" />

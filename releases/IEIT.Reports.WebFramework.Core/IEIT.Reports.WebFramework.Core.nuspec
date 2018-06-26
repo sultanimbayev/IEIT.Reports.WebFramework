@@ -20,6 +20,6 @@
 	</frameworkAssemblies>
   </metadata>
   <files>
-	<file src="..\..\IEIT.Reports.WebFramework.Core\bin\Release\IEIT.Reports.WebFramework.Core.dll" target="lib\net45" />
+	<file src="..\..\IEIT.Reports.WebFramework.Core\bin\Release\IPEIT.Reports.WebFramework.Core.dll" target="lib\net45" />
   </files>
 </package>

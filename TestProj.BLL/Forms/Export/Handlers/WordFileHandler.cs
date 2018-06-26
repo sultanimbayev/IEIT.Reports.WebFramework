@@ -1,7 +1,7 @@
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using IEIT.Reports.WebFramework.Core.Interfaces;
-using IEIT.Reports.WebFramework.Core.Resolvers;
+using IEIT.TemplateResolver;
 using TestProj.BLL.Forms.Export.Helpers;
 using TestProj.BLL.Forms.Export.Repositories.Interfaces;
 

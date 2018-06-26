@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>IEIT.Reports.WebFramework.Api</id>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
     <authors>yerlanyr, sultan.imbayev</authors>
     <owners>IPEIT KBTU</owners>
     <projectUrl>https://github.com/sultanimbayev/IEIT.Reports.WebFramework</projectUrl>
@@ -18,7 +18,7 @@
 	</releaseNotes>
     <tags>Excel Api DownloadManager</tags>
     <dependencies>
-	  <dependency id="IEIT.Reports.WebFramework.Core" version="[2.0.0]" />
+	  <dependency id="IEIT.Reports.WebFramework.Core" version="[2.1.0]" />
     </dependencies>
 	<frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Web" />

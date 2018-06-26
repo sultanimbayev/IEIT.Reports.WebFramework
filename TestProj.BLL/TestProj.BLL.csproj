@@ -38,6 +38,9 @@
       <HintPath>..\packages\IEIT.Reports.Export.Helpers.0.1.1\lib\IEIT.Reports.Export.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IPEIT.TemplateResolver, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IPEIT.TemplateResolver.1.0.0\lib\net45\IPEIT.TemplateResolver.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
