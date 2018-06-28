@@ -21,17 +21,13 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
         /// Получить название архива для файлов относящиеся к данному репозиторию
         /// </summary>
         /// <param name="repository">Репозитории, для которого требуется это узнать</param>
-        /// <returns>Название файла архива или <see cref="string.Empty"/> если не найдено</returns>
+        /// <returns>Название файла архива или название по умолчанию, если не найдено</returns>
         public static string GetZipName(Type repository)
         {
             var name = repository?.GetCustomAttribute<ReturnsZipAttribute>()?.Name ?? DEFAULT_ZIP_NAME;
             return name.EndsWith(".zip") ? name : name + ".zip";
         }
-
-
-
-
-
+        
 
         public static DirectoryInfo CreateDirectoryRecursively(string path)
         {
