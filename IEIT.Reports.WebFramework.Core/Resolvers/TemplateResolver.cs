@@ -14,7 +14,7 @@ namespace IEIT.Reports.WebFramework.Core.Resolvers
     {
         
         private static string TemplatesDirectory;
-        private const string SUPPORTED_FILE_EXTENTIONS = "xls|xlsx|doc|docx";
+        private const string SUPPORTED_FILE_EXTENTIONS = "txt|pdf|rtf|ppt|pptx|xls|xlsx|doc|docx";
         private const string CONFIG_KEY_TEMPLATES_PATH = "WebFramework.TemplatesPath";
 
         static TemplateResolver()
@@ -68,31 +68,29 @@ namespace IEIT.Reports.WebFramework.Core.Resolvers
         /// <returns></returns>
         public static string ResolveFilePath(string fileId)
         {
+            if (string.IsNullOrEmpty(fileId)) { return null; }
             var baseDir = GetTemplatesDir();
-            if (string.IsNullOrEmpty(fileId))
+
+            var targetFileName = fileId;
+
+            if (fileId.Contains("\\"))
             {
-                return string.Empty;
+                targetFileName = fileId.Substring(fileId.LastIndexOf("\\") + 1);
+                var templatePath = fileId.Substring(0, fileId.LastIndexOf("\\"));
+                if (!templatePath.StartsWith("\\")) { templatePath = "\\" + templatePath; }
+                baseDir = string.Concat(baseDir, templatePath);
             }
 
-            var fileExtensions = SUPPORTED_FILE_EXTENTIONS.Split('|').Select(ext => '.' + ext);
-            bool idContainsExtension = false;
-            foreach (var fileExt in fileExtensions) { if (fileId.EndsWith(fileExt)) { idContainsExtension = true; break; } }
+            var filesPaths = Directory.GetFiles(baseDir);
+            Regex regEx = new Regex($"{targetFileName}(\\.({SUPPORTED_FILE_EXTENTIONS}))?$");
 
-            if (idContainsExtension) { return $"{baseDir}\\{fileId}"; }
+            foreach (var path in filesPaths)
+            {
+                var fileName = Path.GetFileName(path);
+                if (regEx.IsMatch(fileName)) { return path; }
+            }
 
-            var pathParts = fileId.Split("/\\".ToCharArray());
-            var targetFileName = pathParts.Last();
-            pathParts = pathParts.Take(pathParts.Count() - 1).ToArray();
-            var innerPath = string.Join("\\", pathParts);
-            var filePath = baseDir + (!string.IsNullOrWhiteSpace(innerPath) ? "\\" + innerPath : string.Empty);
-
-            var fileNames = Directory.GetFiles(filePath).Select(path => Path.GetFileName(path));
-            Regex regEx = new Regex($"{targetFileName}\\.({SUPPORTED_FILE_EXTENTIONS})");
-
-            foreach (var fileName in fileNames)
-            { if (regEx.IsMatch(fileName)) { return $"{filePath}\\{fileName}"; } }
-
-            return string.Empty;
+            return null;
 
         }
 
