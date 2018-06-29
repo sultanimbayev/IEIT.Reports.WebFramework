@@ -163,8 +163,7 @@ foreach(var pair in names)
 
 ##### Configuring
 
-If your project contains the *(App.config)* cofiguration file, then after installation of the 
-*Start package* the following line have to appear in the `appSettings` section:
+If your project contains the *(App.config)* cofiguration file, then after installation of the package the following line have to appear in the `appSettings` section:
 ```
 <add key="WebFramework.TemplatesPath" value="..\..\TemplateFiles" />
 ```
