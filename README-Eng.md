@@ -102,9 +102,10 @@ Use ReturnsZip attribute to define the name of the archive.
 
 Example:
 ```C#
-[Report]
-[ReturnsZip("My archive")]
-public class MyFileReport: IReport
+[RepositoryFor("MyFile")]
+[HasHandler("MyFileHandler")]
+[ReturnsZip("My archive.zip")]
+public class MyFileRepo : IRepository
 {
     //...
 }
@@ -121,9 +122,10 @@ If you want to declare and share the display names of the reports you create, th
 
 Example:
 ```C#
-[Report]
+[RepositoryFor("MyFile")]
+[HasHandler("MyFileHandler")]
 [DisplayName(DisplayLanguage.English, "Download my files")]
-public class MyFileReport: IReport
+public class MyFileRepo : IRepository
 {
     //...
 }
@@ -136,12 +138,12 @@ using IEIT.Reports.WebFramework.Api.Resolvers;
 using IEIT.Reports.WebFramework.Core.Enum;
 ```
 
-Use the `LangUtils` class to get the names you have assigned.
-`LangUtils` is placed in the `IEIT.Reports.WebFramework.Api.Resolvers` namespace.
+Use the `RepositoryResolver` class to get the names you have assigned.
+`RepositoryResolver` is placed in the `IEIT.Reports.WebFramework.Api.Resolvers` namespace.
 
 For example, if you want to get the display name of the report in the example above:
 ```C#
-var name = LangUtils.GetDisplayName("MyFile", DisplayLanguage.English);
+var name = RepositoryResolver.GetDisplayName("MyFile", DisplayLanguage.English);
 Console.WriteLine($"Name of the report is: {name}");
 ```
 
@@ -150,7 +152,7 @@ It means that you can make display name of the report in several languages.
 
 You can also, take the display names of all report classes with their corresponding class name:
 ```C#
-var names = LangUtils.GetDisplayNames(DisplayLanguage.English);
+var names = RepositoryResolver.GetDisplayNames(DisplayLanguage.English);
 foreach(var pair in names)
 {
 	Console.WriteLine($"Display name: {pair.Value}, class name: {pair.Key}");

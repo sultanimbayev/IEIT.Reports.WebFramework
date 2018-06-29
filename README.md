@@ -100,9 +100,10 @@ public class MyFileHandler : IHandler
 Например:
 
 ```C#
-[Report]
-[ReturnsZip("Имя архива такой, какой я указал")]
-public class MyFileReport: IReport
+[RepositoryFor("MyFile")]
+[HasHandler("MyFileHandler")]
+[ReturnsZip("Имя архива такой, какой я указал.zip")]
+public class MyFileRepo : IRepository
 {
     //...
 }
@@ -128,9 +129,10 @@ private const string DEFAULT_ZIP_NAME = "Выходные данные.zip";
 Например:
 
 ```C#
-[Report]
+[RepositoryFor("MyFile")]
+[HasHandler("MyFileHandler")]
 [DisplayName(DisplayLanguage.Russian, "Отчет о данных пользователя")]
-public class MyFileReport: IReport
+public class MyFileRepo : IRepository
 {
     //...
 }
@@ -139,17 +141,17 @@ public class MyFileReport: IReport
 Не забудьте включить пространства имен:
 
 ```C#
-using IEIT.Reports.WebFramework.Api.Resolvers;
+using IEIT.Reports.WebFramework.Core.Attributes;
 using IEIT.Reports.WebFramework.Core.Enum;
 ```
 
 
-Чтобы получить указанные названия, используйте класс `LangUtils` который
+Чтобы получить указанные названия, используйте класс `RepositoryResolver` который
 находится в пространстве `IEIT.Reports.WebFramework.Api.Resolvers`
 Например, чтобы получить название отчета на примере выше:
 
 ```C#
-var name = LangUtils.GetDisplayName("MyFile", DisplayLanguage.Russian);
+var name = RepositoryResolver.GetDisplayName("MyFile", DisplayLanguage.Russian);
 Console.WriteLine($"Название отчета: {name}");
 ```
 
@@ -160,7 +162,7 @@ Console.WriteLine($"Название отчета: {name}");
 
 Вы также можете получить названия всех отчетов с именами их классов:
 ```C#
-var names = LangUtils.GetDisplayNames(DisplayLanguage.Russian);
+var names = RepositoryResolver.GetDisplayNames(DisplayLanguage.Russian);
 foreach(var pair in names)
 {
 	Console.WriteLine($"Название: {pair.Value}, класс: {pair.Key}");
