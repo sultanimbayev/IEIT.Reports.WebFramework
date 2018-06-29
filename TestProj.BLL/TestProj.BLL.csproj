@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Forms\Export\Handlers\ExcelFilesHandler.cs" />
+    <Compile Include="Forms\Export\Handlers\MyFileHandler.cs" />
     <Compile Include="Forms\Export\Handlers\WordFileHandler.cs" />
     <Compile Include="Forms\Export\Helpers\WordProcessingHelper.cs" />
     <Compile Include="Forms\Export\Models\DocBlock.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Forms\Export\Repositories\HumanDetailsRepo.cs" />
     <Compile Include="Forms\Export\Repositories\Interfaces\IReplacerRepository.cs" />
     <Compile Include="Forms\Export\Repositories\Interfaces\ISimpleExcelRepository.cs" />
+    <Compile Include="Forms\Export\Repositories\MyFileRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
