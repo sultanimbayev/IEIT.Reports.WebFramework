@@ -7,7 +7,7 @@ Framework for file downloading in ASP.NET MVC.
 Install using NuGet package manager:
 
 ```
-PM> Install-Package IEIT.Reports.WebFramework.Api -Version 1.2.1
+PM> Install-Package IEIT.Reports.WebFramework.Api -Version 1.3.0
 ```
 
 ## How to use

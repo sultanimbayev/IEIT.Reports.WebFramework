@@ -8,7 +8,7 @@
 Установка через менеджер пакетов NuGet:
 
 ```
-PM> Install-Package IEIT.Reports.WebFramework.Api -Version 1.2.1
+PM> Install-Package IEIT.Reports.WebFramework.Api -Version 1.3.0
 ```
 
 ## Как использовать
