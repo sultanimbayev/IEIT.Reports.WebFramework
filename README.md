@@ -14,62 +14,64 @@ PM> Install-Package IEIT.Reports.WebFramework.Api
 
 ## Как использовать
 
-(для версии 2.x.x)
-
-После установки у вас появится файл `ReportExportController.cs` в папке `~\Controllers\`. В котором вы найдете константу:
-
-```C#
-private const string API_ROUTE_BASE = "api/Files/DownloadForm/";
-```
-
-Это путь выгрузке ваших файлов. Запомните его чтобы вводить в браузер для проверки и выгрузки ваших файлов. 
-
-Далее, создайте класс в любом месте вашего решения (можно даже в другом проекте, лишь бы он был связан с проектом в котором находится контроллер, и нужно чтобы там был установлен пакет IEIT.Reports.WebFramework.Core).
-Затем добавьте следующие пространства имен в свой код:
+Cоздайте класс в любом месте вашего web проекта и добавьте следующие пространства имен:
 
 ```C#
 using IEIT.Reports.WebFramework.Core.Attributes;
 using IEIT.Reports.WebFramework.Core.Interfaces;
 ```
 
-Сделайте следующие шаги для создание выгружаемого файла:
+Затем:
  1. Добавьте атрибут `Report` к созданному классу.
- 2. Добавьте конструктор принимающий объект `NameValueCollection`.
- 3. Реализуйте интерфейс `IReport` в своем классе. 
+ 2. Реализуйте интерфейс `IReport` в своем классе. 
 
  Пример:
 
 ```C#
 [Report]
-public class MyFileReport: IReport
+public class MyFile : IReport
 {
-    public string Name { get; set; }
-
-    public MyFileReport(NameValueCollection queryParams)
+    public void GenerateFiles(NameValueCollection queryParams, string inDir)
     {
-        Name = queryParams["name"] ?? "there";
-    }
-    public void GenerateFiles(string inDir)
-    {
+        var name = queryParams["name"] ?? "there";
         var path = Path.Combine(inDir, "newFile.txt");
-        File.WriteAllText(path, $"Hello {Name}!");
+        File.WriteAllText(path, $"Hello {name}!");
     }
-
 }
 ```
 
-Все, теперь вы можете выгрузить свой файл по ссылке `/api/Files/DownloadForm/MyFile?name=Sultan`
+Теперь вы можете выгрузить свой файл по ссылке `/api/Files/DownloadForm/MyFile?name=Sultan`
 
 `queryParams` - это параметры запроса выгружаемого файла методом GET
 
 `inDir` - путь к папке где следует создать выгружаемые файлы
 
+> Если использовать аттрибут `[Report]` без параметров, то название класса под аттрибутом будет определять
+> конечный вид ссылки на выгрузку. Если вы хотите переопределить это название, то передайте это значение как
+> параметр в аттрибут `[Report]`. Например `[Report("NotMyFile")]`
+
+Чтобы такой класс создать в другом проекте нужно добавить связь (Reference) с проектом в котором находится контроллер и установить 
+туда пакет IEIT.Reports.WebFramework.Core.
+
+### Как это работает?
+
+После установки у вас появится файл `ReportExportController.cs` в папке `~\Controllers\`. 
+В котором вы найдете константу:
+
+> `~` это домашняя папка веб проекта
+
+```C#
+private const string API_ROUTE_BASE = "api/Files/DownloadForm/";
+```
+
+Это путь выгрузке ваших файлов. Запомните его чтобы вводить в браузер для проверки и выгрузки ваших файлов. 
+Вся логика находится в этом контроллере, но детали скрыты в коде библиотеки, которые вы можете посмотреть тут на GitHub.
 
 ### Аттрибут ReturnsZip
 
-Если по указанному пути, `inDir`, вы создадите один файл, то этот файл будет возвращен клиенту.
-Но, если вы создадите там несколько файлов, тогда клиенту будет передан .zip архив с этими файлами.
-Вы можете использовать данный аттрибут, если хотите задать имя архива.
+Если по указанному пути, `inDir`, вы создадите не один файл а несколько, тогда клиенту будет 
+передан .zip архив с этими файлами. Вы можете использовать данный аттрибут, если хотите 
+задать имя архива.
 
 Например:
 
@@ -78,7 +80,10 @@ public class MyFileReport: IReport
 [ReturnsZip("Имя архива такой, какой я указал")]
 public class MyFileReport: IReport
 {
-    //...
+    public void GenerateFiles(NameValueCollection queryParams, string inDir)
+    {
+        //...
+    }
 }
 ```
 
@@ -103,13 +108,6 @@ public class MyFileReport: IReport
 {
     //...
 }
-```
-
-Не забудьте включить пространства имен:
-
-```C#
-using IEIT.Reports.WebFramework.Api.Resolvers;
-using IEIT.Reports.WebFramework.Core.Enum;
 ```
 
 
