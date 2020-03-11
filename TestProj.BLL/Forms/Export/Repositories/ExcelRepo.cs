@@ -22,7 +22,7 @@ namespace TestProj.BLL.Forms.Export.Repositories
         public List<string> FileNames { get; set; }
         public List<IExcelCell> ExcelCells { get; set; }
         public string TemplateId { get; set; } = "excelExample.xlsx";
-        public HumanExcelInfoReport(NameValueCollection queryParams)
+        public void Init(NameValueCollection queryParams)
         {
             var fileName = $@"ExcelExample {DateTime.Now:dd.MM.yyyy}.xlsx";
             FileNames = new List<string>()
@@ -71,11 +71,12 @@ namespace TestProj.BLL.Forms.Export.Repositories
 			
         }
 
-        public void GenerateFiles(string inDir)
+        public void GenerateFiles(NameValueCollection queryParams, string inDir)
         {
+            Init(queryParams);
             var handler = new ExcelFilesHandler();
             handler.InitializeRepo(this);
-            handler.GenerateFiles(inDir);
+            handler.GenerateFiles(queryParams, inDir);
         }
 
         private class Person{

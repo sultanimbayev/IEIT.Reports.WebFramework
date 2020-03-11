@@ -1,6 +1,6 @@
 ﻿using IEIT.Reports.WebFramework.Api.Resolvers;
 using IEIT.Reports.WebFramework.Core.Attributes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace UnitTestProject
 {
-    [TestClass]
+    [TestFixture]
     public class ReportResolverTest
     {
-        [TestMethod]
+        [Test]
         public void GetZipName()
         {
             var actual = FileUtils.GetZipName(typeof(SomeClass));
             Assert.AreEqual("Name1.zip", actual);
         }
         
-         [TestMethod]
+        [Test]
         public void IsReport()
         {
             var shouldBeFalse = ReportResolver.IsReport("Report3")(typeof(Report1));
@@ -29,14 +29,15 @@ namespace UnitTestProject
             var shouldBeTrue = ReportResolver.IsReport("Report2")(typeof(Report2));
             Assert.IsTrue(shouldBeTrue);
         }
-        [TestMethod]
+        [Test]
         public void GetFileHandler_ShouldWork()
         {
-            var report = ReportResolver.GetFileGeneratorFor("Report2", new NameValueCollection());
+            var report = ReportResolver.GetFileGeneratorFor("Report2");
             Assert.IsNotNull(report);
-            Assert.IsInstanceOfType(report, typeof(Report2));
+            Assert.IsTrue(report is Report2);
         }
-        [TestMethod]
+
+        [Test]
         public void ReplaceSuffix()
         {
             Assert.AreEqual("asdf", ReportResolver.RemoveReportSuffix("asdfReport"));
@@ -46,7 +47,7 @@ namespace UnitTestProject
         /*
          GetAllReportsAndReportsWithHandler
          */
-        [TestMethod]
+        [Test]
         public void GetAllReports()
         {
             var actual = ReportResolver.GetAllReports();

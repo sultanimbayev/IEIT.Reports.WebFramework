@@ -25,7 +25,7 @@ namespace TestProj.BLL.Forms.Export.Repositories
         public string TemplateId { get; set; } = "wordExample";
 
 
-        public HumanInfoReport(NameValueCollection queryParams)
+        public void Init(NameValueCollection queryParams)
         {
             DocData = new DocData();
 
@@ -68,8 +68,9 @@ namespace TestProj.BLL.Forms.Export.Repositories
 			public string workPlace {get;set;}
 		}
 
-        public void GenerateFiles(string inDir)
+        public void GenerateFiles(NameValueCollection queryParams, string inDir)
         {
+            Init(queryParams);
             var h = new WordFileHandler();
             h.InitializeRepo(this);
             h.GenerateFiles(inDir);

@@ -14,11 +14,7 @@ namespace UnitTestProject
     [ReturnsZip("CustomName")]
     class Report1 : IReport
     {
-        public Report1(NameValueCollection query)
-        {
-
-        }
-        public void GenerateFiles(string inDir)
+        public void GenerateFiles(NameValueCollection queryParams, string inDir)
         {
             File.WriteAllText(inDir + "/1.txt", "some text");
 
@@ -27,11 +23,7 @@ namespace UnitTestProject
     [Report]
     class Report2 : IReport
     {
-        public Report2(NameValueCollection query)
-        {
-
-        }
-        public void GenerateFiles(string inDir)
+        public void GenerateFiles(NameValueCollection queryParams, string inDir)
         {
             // create 2 files
             File.WriteAllText(inDir + "/1.txt", "some text");
@@ -42,15 +34,7 @@ namespace UnitTestProject
     [Report]
     class Report3: IReport
     {
-        
-        public Report3(NameValueCollection query)
-        {
-            this.query = query;
-        }
-
-        public NameValueCollection query { get; private set; }
-
-        public void GenerateFiles(string inDir)
+        public void GenerateFiles(NameValueCollection queryParams, string inDir)
         {
             File.WriteAllText(inDir + "/1.txt", "some text");
         }

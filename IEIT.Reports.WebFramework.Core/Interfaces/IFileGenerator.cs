@@ -1,7 +1,9 @@
-﻿namespace IEIT.Reports.WebFramework.Core.Interfaces
+﻿using System.Collections.Specialized;
+
+namespace IEIT.Reports.WebFramework.Core.Interfaces
 {
     public interface IFileGenerator
     {
-        void GenerateFiles(string inDir);
+        void GenerateFiles(NameValueCollection queryParams, string inDir);
     }
 }

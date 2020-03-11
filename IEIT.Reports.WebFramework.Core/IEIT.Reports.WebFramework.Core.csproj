@@ -46,7 +46,6 @@
     <Compile Include="Attributes\ReportAttribute.cs" />
     <Compile Include="Attributes\ReturnsZipAttribute.cs" />
     <Compile Include="Interfaces\IFileGenerator.cs" />
-    <Compile Include="Interfaces\IHandler.cs" />
     <Compile Include="Interfaces\IReport.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Enum\DisplayLanguage.cs" />

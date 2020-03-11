@@ -29,14 +29,14 @@ namespace IEIT.Reports.WebFramework.Api.Resolvers
         }
         public static HttpResponseMessage GetResult(DirectoryInfo resultDir, string zipDirPath, string formName, NameValueCollection queryParams)
         {
-            IFileGenerator fileGenerator = ReportResolver.GetFileGeneratorFor(formName, queryParams);
+            IFileGenerator fileGenerator = ReportResolver.GetFileGeneratorFor(formName);
             var result = new HttpResponseMessage();
             if (fileGenerator == null)
             {
                 result.StatusCode = HttpStatusCode.NotFound;
                 return result;
             }
-            fileGenerator.GenerateFiles(resultDir.FullName);
+            fileGenerator.GenerateFiles(queryParams, resultDir.FullName);
             result = FileUtils.GetFileContent(GetDocument(fileGenerator.GetType(), resultDir, zipDirPath));
             return result;
         }

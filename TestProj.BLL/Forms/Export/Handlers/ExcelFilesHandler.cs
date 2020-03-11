@@ -5,6 +5,7 @@ using System.Linq;
 using IEIT.Reports.Export.Helpers.Spreadsheet;
 using TestProj.BLL.Forms.Export.Repositories.Interfaces;
 using IEIT.TemplateResolver;
+using System.Collections.Specialized;
 
 namespace TestProj.BLL.Forms.Export.Handlers
 {
@@ -18,7 +19,7 @@ namespace TestProj.BLL.Forms.Export.Handlers
             Repository = repository as ISimpleExcelRepository;
         }
 
-        public void GenerateFiles(string inDir)
+        public void GenerateFiles(NameValueCollection queryParams, string inDir)
         {
             var fileName = Repository.FileNames[0];
             string filePath = $@"{inDir}\{fileName}";

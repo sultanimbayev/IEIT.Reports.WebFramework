@@ -7,7 +7,7 @@ using TestProj.BLL.Forms.Export.Repositories.Interfaces;
 
 namespace TestProj.BLL.Forms.Export.Handlers
 {
-    public class WordFileHandler: IHandler
+    public class WordFileHandler//: IHandler
     {
         public IReplacerRepository Repository;
 
