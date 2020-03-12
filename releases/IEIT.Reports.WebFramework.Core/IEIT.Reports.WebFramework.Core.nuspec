@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>IEIT.Reports.WebFramework.Core</id>
-    <version>2.1.0</version>
+    <version>3.0.0</version>
     <authors>yerlanyr, sultan.imbayev</authors>
     <owners>IPEIT KBTU</owners>
     <projectUrl>https://github.com/sultanimbayev/IEIT.Reports.WebFramework</projectUrl>
@@ -20,6 +20,6 @@
 	</frameworkAssemblies>
   </metadata>
   <files>
-	<file src="..\..\IEIT.Reports.WebFramework.Core\bin\Release\IPEIT.Reports.WebFramework.Core.dll" target="lib\net45" />
+	<file src="..\..\IEIT.Reports.WebFramework.Core\bin\Release\IEIT.Reports.WebFramework.Core.dll" target="lib\net45" />
   </files>
 </package>

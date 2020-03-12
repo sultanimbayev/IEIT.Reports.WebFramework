@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>IEIT.Reports.WebFramework.Api</id>
-    <version>2.1.0</version>
+    <version>3.0.0</version>
     <authors>yerlanyr, sultan.imbayev</authors>
     <owners>IPEIT KBTU</owners>
     <projectUrl>https://github.com/sultanimbayev/IEIT.Reports.WebFramework</projectUrl>
@@ -14,11 +14,10 @@
 		Excel или Word.
 	</description>
     <releaseNotes>
-		- Добавлена подгрузка недостоющих сборок (.dll файлов) для поиска отчета в них
 	</releaseNotes>
     <tags>Excel Api DownloadManager</tags>
     <dependencies>
-	  <dependency id="IEIT.Reports.WebFramework.Core" version="[2.1.0]" />
+	  <dependency id="IEIT.Reports.WebFramework.Core" version="[3.0.0]" />
     </dependencies>
 	<frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Web" />
